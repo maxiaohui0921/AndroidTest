@@ -1,9 +1,12 @@
 #-*-coding:utf-8-*-
 #__author__='maxiaohui'
 
+#device information
 deviceId="192.168.29.248:5555"
 devicePsw="2580"
+deviceSN='FC241118370034'
 
+#log information
 log_path='F:\\log'
 
 #adb keyword

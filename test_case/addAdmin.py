@@ -1,7 +1,7 @@
 #-*-coding:utf-8-*-
 #__author__='maxiaohui'
 from config import config
-from test_device.deviceTest import frDevice
+from test_device.terminal import frDevice
 
 device34=frDevice(config.deviceId)
 device34.enterSetting()

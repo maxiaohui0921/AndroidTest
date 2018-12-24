@@ -2,7 +2,7 @@
 #__author__='maxiaohui'
 
 from config import config
-from test_device.deviceTest import frDevice
+from test_device.terminal import frDevice
 from test_data import personDataGener
 
 def addPerson(id,name):

@@ -17,7 +17,10 @@ def getDeviceList():
     out,err=pro.communicate()
     out=byteToStr(out)
     deviceList=re.findall(r"(\d{3}.\d{3}.\d{2,3}.\d{2,3}:\d{4})",out)
-    if len(deviceList)==0:
+    if out.find("offline")>=0:
+        print("当前设备连接offline，请手动关闭开启usb debug")
+        deviceList=[]
+    elif len(deviceList)==0:
         print("当前电脑没有连接上任何终端设备，尝试自动连接")
     return deviceList
 
