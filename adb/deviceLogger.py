@@ -11,10 +11,14 @@ from config import config
 fail_date=datetime.date.today().strftime('%m%d')
 fail_time=time.strftime('%H%M%S')
 
-def getLogcat(deviceID,deviceName,keyword):
+def getLogcat(deviceID,deviceName='',keyword=''):
     filename = config.log_path+"\\"+deviceName+"_"+keyword+"_"+fail_date+fail_time+".txt"
+    # print(filename)
     logcat_file = open(filename, 'w')
-    logcmd = "adb -s %s adb -v time |grep %s" % (deviceID,keyword)
+    if keyword=='':
+        logcmd = "adb -s %s logcat -v time" % (deviceID)
+    else:
+        logcmd = "adb -s %s logcat -v time |grep %s" % (deviceID,keyword)
     # print("执行的adb命令："+logcmd)
     pro = subprocess.Popen(logcmd, stdout=logcat_file, stderr=subprocess.PIPE)
     return pro,filename
@@ -56,6 +60,16 @@ def captureScreen(filename):
     cmd_rm = "adb -s %s shell rm /sdcard/DCIM/%s.png" % (config.deviceId, pic_name)
     #print("运行rm命令："+cmd_rm)
     subprocess.Popen(cmd_rm, shell=True)
+
+#定义一个函数的抓取log的装饰器，在跑测试之前抓取adblog，在测试结束之后停止adblog
+def getAdbLog(test):
+    def logResult(*args,**kwargs):  #args是一个列表
+        pro,filename=getLogcat(config.deviceId,config.deviceSN,config.logKeyWord)
+        test(*args,**kwargs)
+        time.sleep(5)
+        stopLogcat(pro)
+    return logResult
+
 
 if __name__=="__main__":  #当前脚本运行实例
     # pro=getLogcat(config.deviceId,"desktop29",config.faceRecognizationKey)

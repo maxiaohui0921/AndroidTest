@@ -8,6 +8,7 @@ deviceSN='FC241118370034'
 
 #log information
 log_path='F:\\log'
+logKeyWord=''
 
 #adb keyword
 faceRecognizationKey="MatchProcessor"

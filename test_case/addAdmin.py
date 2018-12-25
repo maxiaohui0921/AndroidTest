@@ -2,8 +2,12 @@
 #__author__='maxiaohui'
 from config import config
 from test_device.terminal import frDevice
+from adb.deviceLogger import getAdbLog
 
-device34=frDevice(config.deviceId)
-device34.enterSetting()
-device34.addAdmin("马晓晓12")
+@getAdbLog
+def addAdmin(name):
+    device34=frDevice(config.deviceId)
+    device34.enterSetting()
+    device34.addAdmin(name)
 
+addAdmin("李丽丽")

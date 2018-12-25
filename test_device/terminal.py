@@ -234,6 +234,36 @@ class frDevice(androidDevices):
         afterSetting = self.getTextByResourceId('com.opnext.setting:id/Scenario_selection_text')
         print("修改场景为:%s" % afterSetting)
 
+    #获取默认设置
+    def getDefaultSettings(self):
+        self.clickByResourceId('com.opnext.setting:id/tv_face_recognize_setting')
+        self.clickByText("情景选择")
+        self.clickByResourceId('com.opnext.setting:id/radio_auto')
+        self.clickByResourceId('com.opnext.setting:id/tv_set')
+        print(" 默认活体检测可见光阈值:%s" % self.getTextByResourceId('com.opnext.setting:id/value_live_light'))
+        print(" 默认活体检测近红外阈值:%s" % self.getTextByResourceId('com.opnext.setting:id/value_live_Nir'))
+        print(" 1:N模式可见光阈值：%s" % self.getTextByResourceId('com.opnext.setting:id/value_light_thresholdN'))
+        self.scrollToend()
+        print((" 1:1模式可见光阈值:%s" % self.getTextByResourceId('com.opnext.setting:id/value_light_threshold1')))
+
+    #编辑自定义设置的参数
+    def setSelfDefineParas(self):
+        self.clickByResourceId('com.opnext.setting:id/tv_face_recognize_setting')
+        self.clickByText("情景选择")
+        self.clickByResourceId('com.opnext.setting:id/radio_auto')
+        self.clickByResourceId('com.opnext.setting:id/tv_set')
+        #设置一个参数
+        def setValue(checkResource,aimValue,upButton,dwButton):
+            while int(self.getTextByResourceId(checkResource)[:-1]) > aimValue:
+                self.clickByResourceId(dwButton)
+            while int(self.getTextByResourceId(checkResource)[:-1]) < aimValue:
+                self.clickByResourceId(upButton)
+        #设置活体检测可见光
+        setValue('com.opnext.setting:id/value_live_light',0,'com.opnext.setting:id/add_live_light','com.opnext.setting:id/reduce_live_light',)
+        #设置活体检测近红外
+        setValue('com.opnext.setting:id/value_live_Nir',0,'com.opnext.setting:id/add_live_Nir','com.opnext.setting:id/reduce_live_Nir')
+        #设置1:N的可见光
+        setValue('com.opnext.setting:id/value_light_thresholdN',0,'com.opnext.setting:id/add_light_thresholdN','com.opnext.setting:id/reduce_light_thresholdN')
 
 if __name__=="__main__":
     a=androidDevices("192.168.29.250:5555")
