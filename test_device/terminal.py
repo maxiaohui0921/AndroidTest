@@ -80,7 +80,7 @@ class frDevice(androidDevices):
         #点击保存
         self.clickByResourceId("com.opnext.setting:id/tv_save")
 
-    #添加一个人员
+    # 添加一个人员
     def addPerson(self,id,name,doorCardId=None,icCardId=None,personRule=None,paraDatabase=None):
         myLogging.showLog("info", "添加人员：%s"%name)
         # print("添加人员：%s"%name)
@@ -119,7 +119,7 @@ class frDevice(androidDevices):
             # print("没有找到相关人员")
             myLogging.showLog("warning", "搜出了相关人员")
 
-    #搜索版本号/序列号
+    # 搜索版本号/序列号
     def getDeviceInfo(self):
         self.clickByResourceId("com.opnext.setting:id/tv_about_device")
         sw=self.getTextByResourceId("com.opnext.setting:id/tv_software_version")
@@ -127,7 +127,7 @@ class frDevice(androidDevices):
         licenseMaxNumber=self.getTextByResourceId("com.opnext.setting:id/tv_maxmember")
         return sw,sn,licenseMaxNumber
 
-    #本地导入license
+    # 本地导入license
     def upLicense(self,number):
         self.clickByResourceId("com.opnext.setting:id/tv_about_device")
         oldLicense = self.getTextByResourceId('com.opnext.setting:id/tv_maxmember')
@@ -149,7 +149,7 @@ class frDevice(androidDevices):
         newLicense=self.getTextByResourceId('com.opnext.setting:id/tv_maxmember')
         print("导入license之后，人数是：%s"%newLicense)
 
-    #获取人员容量
+    # 获取人员容量
     def getPersonCapacity(self):
         dataSource=self.getTextByResourceId("com.opnext.setting:id/tv_persons_capacity")
         num = re.findall('\d+', dataSource)
@@ -157,7 +157,7 @@ class frDevice(androidDevices):
         capacityNumer=num[1]
         return personNumber,capacityNumer
 
-    #修改默认人员规则
+    # 修改默认人员规则
     def editDefualPRule(self):
         self.clickByText("默认人员规则")
         self.inputByResourceId("com.opnext.setting:id/add_name","上班时间")
@@ -185,11 +185,13 @@ class frDevice(androidDevices):
         self.clickByResourceId('com.opnext.setting:id/save')
         self.clickByResourceId('com.opnext.setting:id/tv_save')
 
-    #批量导入人员
+    # 批量导入人员
     def importPerson(self,number,photo,pRule="默认人员规则"):  #U盘的结构必须按照规定格式进行排列才能跑当前case
         print("当前人员状态:%s"%self.getTextByResourceId('com.opnext.datatool:id/person_progress_text'))
         self.clickByResourceId('com.opnext.datatool:id/add_people')
-        self.deviceConnected(text=pRule).left(resourceId='com.opnext.setting:id/img_select').click()
+        #如果是一条人员规则，默认是选中的，所以需要做个条件判断是否已经选中
+        if not self.deviceConnected(text=pRule).left(resourceId='com.opnext.setting:id/img_select').info['checked']:
+            self.deviceConnected(text=pRule).left(resourceId='com.opnext.setting:id/img_select').click()
         self.clickByResourceId('com.opnext.setting:id/btn_keep_show')
         time.sleep(3)
         self.clickByText("导入人员")
@@ -207,12 +209,15 @@ class frDevice(androidDevices):
         self.deviceConnected(text='照片').left(resourceId='com.opnext.datatool:id/selected').click()
         time.sleep(3)
         self.clickByResourceId('com.opnext.datatool:id/btn_next')
+        timeUsed=0
         while self.resourceExists("com.opnext.datatool:id/ll_wait"):
             time.sleep(1)
+            timeUsed+=1
         print("导入成功人数:%s"%self.getTextByResourceId("com.opnext.datatool:id/tv_sucessed"))
         print("导入失败人数:%s"%self.getTextByResourceId("com.opnext.datatool:id/tv_failed"))
+        print("导入用时：%d秒"%timeUsed)
 
-    #修改人脸识别模式
+    # 修改人脸识别模式
     def editValidation(self, aim):   #1:N模式  1:1模式 混合模式
         self.clickByResourceId('com.opnext.setting:id/tv_face_recognize_setting')
         currentSetting=self.getTextByResourceId('com.opnext.setting:id/Validation_mode_text')
@@ -223,7 +228,7 @@ class frDevice(androidDevices):
         afterSetting=self.getTextByResourceId('com.opnext.setting:id/Validation_mode_text')
         print("修改后验证模式:%s"%afterSetting)
 
-    #修改情景选择
+    # 修改情景选择
     def editScenario(self,aim): #安全情景  快速情景 自定义情景
         self.clickByResourceId('com.opnext.setting:id/tv_face_recognize_setting')
         currentSetting = self.getTextByResourceId('com.opnext.setting:id/Scenario_selection_text')
@@ -234,7 +239,7 @@ class frDevice(androidDevices):
         afterSetting = self.getTextByResourceId('com.opnext.setting:id/Scenario_selection_text')
         print("修改场景为:%s" % afterSetting)
 
-    #获取默认设置
+    # 获取默认设置
     def getDefaultSettings(self):
         self.clickByResourceId('com.opnext.setting:id/tv_face_recognize_setting')
         self.clickByText("情景选择")
@@ -246,7 +251,7 @@ class frDevice(androidDevices):
         self.scrollToend()
         print((" 1:1模式可见光阈值:%s" % self.getTextByResourceId('com.opnext.setting:id/value_light_threshold1')))
 
-    #编辑自定义设置的参数
+    # 编辑自定义设置的参数
     def setSelfDefineParas(self):
         self.clickByResourceId('com.opnext.setting:id/tv_face_recognize_setting')
         self.clickByText("情景选择")
@@ -265,6 +270,32 @@ class frDevice(androidDevices):
         #设置1:N的可见光
         setValue('com.opnext.setting:id/value_light_thresholdN',0,'com.opnext.setting:id/add_light_thresholdN','com.opnext.setting:id/reduce_light_thresholdN')
 
+    # 查看今日统计
+    def checkTodayRecord(self):
+        self.clickByResourceId("com.opnext.setting:id/tv_statistics_today")
+        sucTimes=self.getTextByResourceId("com.opnext.setting:id/tv_success_num")
+        failTimes=self.getTextByResourceId("com.opnext.setting:id/tv_fail_num")
+        sucRate=self.getTextByResourceId("com.opnext.setting:id/succes_num")
+        failRate=self.getTextByResourceId("com.opnext.setting:id/fail_num")
+        return sucTimes,sucRate,failTimes,failRate
+
+    #进入netconfig界面
+    def enterConfig(self):
+        self.enterSetting()
+        self.clickByResourceId("com.opnext.setting:id/tv_about_device")
+        for times in range(3):
+            self.clickByText("关于本机")
+
+    #使用本地升级
+    def upgradeLocal(self):
+        self.enterConfig()
+        self.clickByText("进入系统升级模式")
+        self.clickByText("本地升级")
+        time.sleep(10)
+        if self.getTextByResourceId("android:id/alertTitle")=="验证正确":
+            self.clickByResourceId('android:id/button1')
+
 if __name__=="__main__":
-    a=androidDevices("192.168.29.250:5555")
-    a.clickByText("人脸识别设置")
+    t=frDevice(config.deviceId)
+    t.enterConfig()
+    t.upgradeLocal()

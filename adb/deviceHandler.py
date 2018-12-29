@@ -1,8 +1,7 @@
 #-*-coding:utf-8-*-
 #__author__='maxiaohui'
 import subprocess
-import re
-import os
+import re,os,time
 
 #检查当前电脑连接的设备id，可检测到多台设备
 def byteToStr(b):
@@ -35,6 +34,25 @@ def checkConnected(deviceId):
             logs=os.popen("adb connect %s"%deviceId)
             # print(byteToStr(logs))
 
+def pushOtaFile(file):
+    cmd="adb push %s /sdcard/update.zip"%file
+    print(cmd)
+    os.popen(cmd)
+    #判断文件是否push完成
+    fileFinished=False
+    filesize0=0
+    while not fileFinished:
+        time.sleep(10)
+        fileSize1=int(os.popen("adb shell ls -s /sdcard/update.zip").read().split()[0])
+        if fileSize1-filesize0>0:
+            filesize0=fileSize1
+            print("-",end="")
+        else:
+            fileFinished=True
+            print("文件上传成功，可以开始升级了")
+
 if __name__=="__main__":  #当前脚本运行实例
     #print(getDeviceList())
-    checkConnected("192.168.29.248:5555")
+    # checkConnected("192.168.29.248:5555")
+    b=os.popen("adb shell ls -s /sdcard/update.zip").read().split()[0]
+    print(b)

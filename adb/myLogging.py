@@ -3,7 +3,7 @@
 import logging  # 引入logging模块
 
 def showLog(level,message):  #把所有log打印显示在屏幕上
-    logging.basicConfig(level=logging.ERROR,format='%(asctime)s %(filename)s[line:%(lineno)d]  %(levelname)s:%(message)s')  # logging.basicConfig函数对日志的输出格式及方式做相关配置
+    logging.basicConfig(level=logging.INFO,format='%(asctime)s %(filename)s[line:%(lineno)d]  %(levelname)s:%(message)s')  # logging.basicConfig函数对日志的输出格式及方式做相关配置
     # 由于日志基本配置中级别设置为DEBUG，所以一下打印信息将会全部显示在控制台上
     if level=="info":    logging.info(message)
     if level == "debug":    logging.debug(message)

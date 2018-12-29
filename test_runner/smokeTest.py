@@ -8,7 +8,6 @@ from test_data import personDataGener
 from test_device.terminal import frDevice
 from adb.deviceLogger import getAdbLog
 
-
 class smokeTest(unittest.TestCase):
 
     #定义要跑测试的机器
@@ -22,7 +21,7 @@ class smokeTest(unittest.TestCase):
         #返回人脸识别UI界面
         self.device34.backToIdle()
 
-    @unittest.skip(u"无条件跳过当前测试")
+    # @unittest.skip(u"无条件跳过当前测试")
     def test_001addAdmin(self):
         print("测试添加管理员")
         warnings.simplefilter("ignore", ResourceWarning)
@@ -69,7 +68,7 @@ class smokeTest(unittest.TestCase):
         print("更新license")
         warnings.simplefilter("ignore", ResourceWarning)
         self.device34.enterSetting()
-        self.device34.upLicense(300)
+        self.device34.upLicense(1000)
 
     # @unittest.skip(u"无条件跳过当前测试")
     def test_007getPersonCapacity(self):
@@ -93,14 +92,14 @@ class smokeTest(unittest.TestCase):
         print("批量导入人员")
         warnings.simplefilter("ignore", ResourceWarning)
         self.device34.enterPersonManager()
-        self.device34.importPerson(100,"有照片","小米")
+        self.device34.importPerson(1000,"有照片","上班时间")
 
     # @unittest.skip(u"无条件跳过当前测试")
     def test_010updateValidation(self):
         print("更改验证模式")
         warnings.simplefilter("ignore", ResourceWarning)
         self.device34.enterSetting()
-        self.device34.editValidation("1:1模式")
+        self.device34.editValidation("1:N模式")
 
     # @unittest.skip(u"无条件跳过当前测试")
     def test_011updateScenario(self):
@@ -116,11 +115,20 @@ class smokeTest(unittest.TestCase):
         self.device34.enterSetting()
         self.device34.getDefaultSettings()
 
+    # @unittest.skip(u"无条件跳过当前测试")
     def test_013setDefualtSetting(self):
         print("设置自定义情景默认设置值为0")
         warnings.simplefilter("ignore", ResourceWarning)
         self.device34.enterSetting()
         self.device34.setSelfDefineParas()
+
+    def test_014getRecordSummary(self):
+        print("获取今日通行统计数据")
+        warnings.simplefilter("ignore", ResourceWarning)
+        self.device34.enterSetting()
+        result=self.device34.checkTodayRecord()
+        print("验证成功：成功次数%s,成功率%s"%(result[0],result[1]))
+        print("验证失败：失败次数%s,失败率%s" % (result[2], result[3]))
 
 if __name__=="__main__":
     unittest.main()

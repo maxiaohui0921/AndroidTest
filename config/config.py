@@ -28,3 +28,6 @@ logcmd_fr = "adb -s %s adb -v time |grep %s" % (deviceId,faceRecognizationKey)
 logcmd_saas_issue = "adb -s %s adb -v time |grep %s" % (deviceId,issueBySaasKey)
 logcmd_import = "adb -s %s adb -v time |grep %s" % (deviceId,importLocalKey)
 logcmd_import = "adb -s %s adb -v time |grep %s" % (deviceId,exportLocalKey)
+
+#SaasHost
+host="http://172.16.20.219"
