@@ -6,7 +6,7 @@ import random
 from config import config
 from test_data import personDataGener
 from test_device.terminal import frDevice
-from adb.deviceLogger import getAdbLog
+from adb import deviceHandler
 
 class smokeTest(unittest.TestCase):
 
@@ -14,8 +14,8 @@ class smokeTest(unittest.TestCase):
     device34=frDevice(config.deviceId)
 
     def setUp(self):
-        #设备的初始状态都是人脸识别UI界面
-        pass
+        #检查设备的连接是否正常，如果不正常就需要在重新连接一遍
+        deviceHandler.checkConnected(config.deviceId)
 
     def tearDown(self):
         #返回人脸识别UI界面
@@ -130,5 +130,15 @@ class smokeTest(unittest.TestCase):
         print("验证成功：成功次数%s,成功率%s"%(result[0],result[1]))
         print("验证失败：失败次数%s,失败率%s" % (result[2], result[3]))
 
+    # @unittest.skip(u"无条件跳过当前测试")
+    def test_000updateDuilyBuild(self):
+        print("自动升级今天的新版本")
+        warnings.simplefilter("ignore", ResourceWarning)
+        self.device34.updateDailyBuild()
+
 if __name__=="__main__":
+    #自动升级之后，自动跑smoke test
+    # device00=frDevice(config.deviceId)
+    # device00.updateDailyBuild()
+    #跑daily smoke
     unittest.main()

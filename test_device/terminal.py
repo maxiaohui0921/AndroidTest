@@ -4,6 +4,7 @@ from test_device.android import androidDevices
 import time,os,re
 from config import config
 from adb import deviceHandler,myLogging
+from test_data import otaUpgrade
 
 #当前测试机可以进行的基本功能操作
 class frDevice(androidDevices):
@@ -282,20 +283,30 @@ class frDevice(androidDevices):
     #进入netconfig界面
     def enterConfig(self):
         self.enterSetting()
-        self.clickByResourceId("com.opnext.setting:id/tv_about_device")
+        # self.clickByResourceId("com.opnext.setting:id/tv_about_device")
         for times in range(3):
             self.clickByText("关于本机")
 
     #使用本地升级
     def upgradeLocal(self):
-        self.enterConfig()
+        time.sleep(2)
         self.clickByText("进入系统升级模式")
         self.clickByText("本地升级")
         time.sleep(10)
         if self.getTextByResourceId("android:id/alertTitle")=="验证正确":
             self.clickByResourceId('android:id/button1')
+        time.sleep(600)
+
+   #自动下载当天文件并升级
+    def updateDailyBuild(self):
+        otaUpgrade.pushDailyBuild(config.deviceId)
+        self.enterConfig()
+        self.upgradeLocal()
 
 if __name__=="__main__":
+    # otaUpgrade.pushDailyBuild(config.deviceId)
     t=frDevice(config.deviceId)
-    t.enterConfig()
-    t.upgradeLocal()
+    t.updateDailyBuild()
+    # t.enterConfig()
+    # t.upgradeLocal()
+

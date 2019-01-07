@@ -41,13 +41,13 @@ def runExportLocal():
     loggerHandler.analyzeLog(pro[1], config.exportLocal)
 
 def runSaasIssue():
-    print("请测试：本地导出人员")
+    print("请测试：Saas下发人员")
     pro = deviceLogger.getLogcat(config.deviceId, "desktop29", config.issueBySaasKey)
-    time.sleep(4*60*60)  # 这里默认是4小时,后期需要根据实际情况进行条件判断自动决定测试时间
+    time.sleep(5*60*60)  # 这里默认是4小时,后期需要根据实际情况进行条件判断自动决定测试时间
     pro[0].terminate()
     print("    测试log文件：%s" % pro[1])
     loggerHandler.analyzeLog(pro[1], config.saasIssueSuccess)
 
 if __name__ == "__main__":  #当前脚本运行实例
-    runFr1N()
+    runSaasIssue()
     #runFr11()

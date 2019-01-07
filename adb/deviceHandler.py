@@ -2,6 +2,7 @@
 #__author__='maxiaohui'
 import subprocess
 import re,os,time
+from adb import myLogging as log
 
 #检查当前电脑连接的设备id，可检测到多台设备
 def byteToStr(b):
@@ -31,7 +32,11 @@ def checkConnected(deviceId):
         if deviceId in deviceList:
             check=True
         else:
-            logs=os.popen("adb connect %s"%deviceId)
+            os.popen("adb connect %s"%deviceId)
+            os.popen("adb root")
+            os.popen("adb remount")
+            os.popen("adb connect %s" % deviceId)
+
             # print(byteToStr(logs))
 
 def pushOtaFile(file):

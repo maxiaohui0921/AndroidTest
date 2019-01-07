@@ -7,6 +7,7 @@ from config import config
 from adb import deviceHandler
 
 todayTag=datetime.datetime.fromtimestamp(time.time()).strftime('%m%d')
+print(todayTag)
 
 def downloadLatestDailyBuild():
     method = "get"
@@ -14,9 +15,15 @@ def downloadLatestDailyBuild():
     swHost = "http://192.168.100.136:8000"
 
     html = apitest.testAPI(method, url, host=swHost).text
-    latestBuild=re.findall(r'<a.*?href=.*?>(.*?)<\/a>',html)[-1]
-
-    if not latestBuild.find(todayTag)>=0:
+    latestBuild=re.findall(r'<a.*?href=.*?>(.*?)<\/a>',html)
+    for i in latestBuild:
+        try:
+            if re.findall(r'\d{8}',i)[0][:4]==todayTag:
+                latestBuild=i
+                break
+        except IndexError:
+            pass
+    if isinstance(latestBuild,list):
         print("没有当天的最新build")
         otaFile=""
     else:
@@ -36,12 +43,12 @@ def downloadLatestDailyBuild():
         print("下载完成")
     return otaFile
 
-def updateDailyBuild(deviceId):
-    file=downloadLatestDailyBuild()
-    # file="F:\\log\\BFRT_3G_DVT_2.1.x.d.t.d_12290417-ota.zip"
+def pushDailyBuild(deviceId):
+    # file=downloadLatestDailyBuild()
+    file="F:\\log\\BFRT_3G_DVT_2.2.x.d.t.d_01070417-ota.zip"
     if file:
         deviceHandler.checkConnected(deviceId)
         deviceHandler.pushOtaFile(file)
 
 if __name__ == "__main__":  #当前脚本运行实例
-    updateDailyBuild(config.deviceId)
+    pushDailyBuild(config.deviceId)
