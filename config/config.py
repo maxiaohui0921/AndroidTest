@@ -2,13 +2,13 @@
 #__author__='maxiaohui'
 
 #device information
-deviceId="192.168.28.203:5555"
+deviceId="192.168.28.224:5555"
 devicePsw="2580"
 # deviceSN='FC241118370034'
 deviceSN='FC222218490092'
 
 #log information
-log_path='F:\\log'
+log_path='F:\\log1'
 logKeyWord=''
 
 #adb keyword

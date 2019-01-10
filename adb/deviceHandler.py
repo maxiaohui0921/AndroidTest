@@ -47,7 +47,7 @@ def pushOtaFile(file):
     fileFinished=False
     filesize0=0
     while not fileFinished:
-        time.sleep(10)
+        time.sleep(60)
         fileSize1=int(os.popen("adb shell ls -s /sdcard/update.zip").read().split()[0])
         if fileSize1-filesize0>0:
             filesize0=fileSize1
@@ -55,6 +55,7 @@ def pushOtaFile(file):
         else:
             fileFinished=True
             print("文件上传成功，可以开始升级了")
+    time.sleep(5)
 
 if __name__=="__main__":  #当前脚本运行实例
     #print(getDeviceList())
