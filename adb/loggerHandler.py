@@ -32,7 +32,7 @@ def getTimeGap(line1,line2):
     return gapSeconds
 
 def analyzeLog(logfile,keyword):
-    lines=open(logfile).readlines()
+    lines=open(logfile,'r',encoding='UTF-8').readlines()
     successTimes=1  #测试成功的次数
     sTime=0   #测试成功的累积时间
 
@@ -55,9 +55,38 @@ def analyzeLog(logfile,keyword):
     if successTimes>1:
         print("    成功次数：%s，平均时长秒:%.3f"%(successTimes,sTime/successTimes))
 
+def analyzePassFail(logfile,passV,failV):  #假设所有的记录都是有用的记录
+    lines=open(logfile,'r',encoding='UTF-8').readlines()
+    successTimes=0  #测试成功的次数
+    failTimes=0
+    sTime=0   #测试成功的累积时间
+    fTime=0
+
+    for i in range(1,len(lines)) :
+        if lines[i].find(passV)>=0:  #算出成功记录的时间
+            successTimes+=1
+            gapTime=getTimeGap(lines[i],lines[i-1])
+            # print("成功time"+str(gapTime))
+            sTime+=gapTime
+        if lines[i].find(failV)>=0:  #算出成功记录的时间
+            failTimes+=1
+            gapTime=getTimeGap(lines[i],lines[i-1])
+            # print("失败time" + str(gapTime))
+            fTime+=gapTime
+
+
+    #打印出结果
+    startTime=getTimeStrByRe(lines[0])
+    endTime=getTimeStrByRe(lines[-1])
+    print("    测试起始时间：%s--->%s,测试时长：%s秒"%(startTime,endTime,getTimeGap(lines[0],lines[-1])))
+    if successTimes>=1:
+        print("    成功次数：%s，平均时长秒:%.3f"%(successTimes,sTime/successTimes))
+    if failTimes>=1:
+        print("    失败次数：%s，平均时长秒:%.3f" % (failTimes, fTime/failTimes))
+
 if __name__=="__main__":  #当前脚本运行实例
-    pro=deviceLogger.getLogcat(config.deviceId,"desktop29",config.faceRecognizationKey)
-    time.sleep(10)
+    pro=deviceLogger.getLogcat(keyword="resultType")
+    time.sleep(60)
     pro[0].terminate()
     print(pro[1])
-    analyzeLog(pro[1],config.oneByNPass)
+    analyzePassFail(pro[1],config.frPass,config.frFail)

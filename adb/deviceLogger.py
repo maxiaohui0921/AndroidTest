@@ -1,8 +1,6 @@
 #-*-coding:utf-8-*-
 #__author__='maxiaohui'
 
-#!C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Python 3.4
-
 import subprocess
 import time,random,os
 import datetime
@@ -12,7 +10,7 @@ fail_date=datetime.date.today().strftime('%m%d')
 fail_time=time.strftime('%H%M%S')
 timeTag=fail_date+fail_time
 
-def getLogcat(deviceID,deviceName='',keyword=''):
+def getLogcat(deviceID=config.deviceId,deviceName='',keyword=''):
     filename = config.log_path+"\\"+deviceName+"_"+keyword+"_"+fail_date+fail_time+".txt"
     # print(filename)
     logcat_file = open(filename, 'w')
@@ -24,27 +22,30 @@ def getLogcat(deviceID,deviceName='',keyword=''):
     pro = subprocess.Popen(logcmd, stdout=logcat_file, stderr=subprocess.PIPE)
     return pro,filename
 
-def stopLogcat(pro):
+def stopPro(pro):
     pro.terminate()
 
 #adb -s 192.168.29.248:5555 shell top -d 5 | grep -E 'beeboxes|opnext'
-def captureCPU(gap,pkg):
+def captureCPU(gap):
     filename = config.log_path+"\\"+"cpu_"+fail_date+fail_time+".txt"
     cpulog_file = open(filename, 'w')
-    cmd_cpu = "adb -s %s shell top -d %d | grep -E '%s'" % (config.deviceId,gap,pkg )
-
+    cmd_cpu = "adb -s %s shell top -d %d | grep -E 'beeboxes|opnext'" % (config.deviceId,gap )
     pro = subprocess.Popen(cmd_cpu, stdout=cpulog_file, stderr=subprocess.PIPE)
     return pro,filename
 
 #获取内存信息
 #adb shell dumpsys meminfo | findstr "beeboxes opnext RAM"
-def captureMemory(gap,keyworks):
+def captureMemory():
     filename = config.log_path + "\\" + "memory_" + fail_date + fail_time + ".txt"
     cpulog_file = open(filename, 'w')
-    cmd_meminfo = "adb -s %s shell dumpsys meminfo -d %d | grep -E '%s'" % (config.deviceId, gap, keyworks)
-    print(cmd_meminfo)
-    pro = subprocess.Popen(cmd_meminfo, stdout=cpulog_file, stderr=subprocess.PIPE)
-    return pro, filename
+    cmd_meminfo = "adb -s %s shell dumpsys meminfo | grep -E 'beeboxes|opnext'" % config.deviceId
+    # print(cmd_meminfo)
+    times=1
+    while times<15:
+        subprocess.Popen(cmd_meminfo, stdout=cpulog_file, stderr=subprocess.PIPE)
+        times+=1
+        time.sleep(10)
+    return filename
 
 #获取屏幕
 def captureScreen(filename):
@@ -68,7 +69,7 @@ def getAdbLog(test):
         pro,filename=getLogcat(config.deviceId,config.deviceSN,config.logKeyWord)
         test(*args,**kwargs)
         time.sleep(5)
-        stopLogcat(pro)
+        stopPro(pro)
     return logResult
 
 @getAdbLog
@@ -80,27 +81,21 @@ def runMonkey(timeHour):
     os.chdir(config.log_path)
     os.mkdir(timeTagMonkey)
     monkeyLog=config.log_path+'\\'+timeTagMonkey
-    cmd='adb -s %s shell monkey -v -v -v -p com.opnext.face -p com.opnext.setting -p com.opnext.setting -p com.opnext.standby -p com.opnext.datatool --ignore-crashes --ignore-timeouts --monitor-native-crashes --throttle 300 -s %d %d 1>%s\info%s.txt 2>%s\error%s.txt'%(config.deviceId,seed,sendTimes,monkeyLog,timeTag,monkeyLog,timeTag)
+    cmd='adb -s %s shell monkey -v -v -v -p com.opnext.face -p com.opnext.setting -p com.opnext.standby -p com.opnext.datatool --ignore-crashes --ignore-timeouts --monitor-native-crashes --throttle 300 -s %d %d 1>%s\info%s.txt 2>%s\error%s.txt'%(config.deviceId,seed,sendTimes,monkeyLog,timeTag,monkeyLog,timeTag)
     print(cmd)
     subprocess.Popen(cmd, shell=True)
     time.sleep(timeHour*3600)
 
 
 if __name__=="__main__":  #当前脚本运行实例
-    # pro=getLogcat(config.deviceId,"desktop29",config.faceRecognizationKey)
-    # time.sleep(20)
-    # pro[0].terminate()
-    # print(pro[1])
+    #runMonkey(0.1)
 
-    # pro=captureCPU(5,"beeboxes|opnext")
-    # time.sleep(20)
-    # pro[0].terminate()
-    # print(pro[1])
+    # pro,filename=captureCPU(5)
+    # time.sleep(60)
+    # stopPro(pro)
 
-    # captureScreen("fr")
+    # captureMemory()
 
-    # pro=captureMemory(5,"beeboxes|opnext|RAM")
-    # time.sleep(20)
-    # pro[0].terminate()
-    # print(pro[1])
-    runMonkey(1)
+    pro,file=getLogcat(keyword="resultType")
+    time.sleep(20)
+    stopPro(pro)

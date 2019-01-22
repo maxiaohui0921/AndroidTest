@@ -2,7 +2,7 @@
 #__author__='maxiaohui'
 
 #device information
-deviceId="192.168.28.224:5555"
+deviceId="192.168.28.203:5555"
 devicePsw="2580"
 # deviceSN='FC241118370034'
 deviceSN='FC222218490092'
@@ -32,3 +32,15 @@ logcmd_import = "adb -s %s adb -v time |grep %s" % (deviceId,exportLocalKey)
 
 #SaasHost
 host="http://172.16.20.219"
+
+monkeyLogKeyWord=['ANR in','CRASH','OOM','Exception','Monkey finished']
+oomKeyWord=['GC_FOR_ALLOC','GC_EXPLICIT','GC_CONCURRENT','GC_BEFORE_OOM']
+topTitle='PID USER PR NI CPU% S #THR VSS RSS PCY Name'
+
+#本地机器，识别的时候成功和失败的关键字  1:1 1:N快速和安全都没有关系，都有这个字段
+frPass='TERMINAL_VALIDATION_PASS'
+frFail='TERMINAL_VALIDATION_FAILURE'
+
+#webserver
+webserverHost="http://192.168.28.1:8080"
+imageFolder=r"F:\U盘\5000"

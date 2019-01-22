@@ -6,7 +6,7 @@ from config import config
 from requests.cookies import RequestsCookieJar
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-def testAPI(method,url,data={},header={},params='',host=config.host):
+def testAPI(method,url,data={},header={},params='',host=config.webserverHost,cookies=None,files=None):
 
     try:  # 判断传参类型如果是json格式
         if header['content-type'].find('json') >= 0:
@@ -16,13 +16,13 @@ def testAPI(method,url,data={},header={},params='',host=config.host):
     response=''
     url=host+url
     if method == ("post" or "POST"):  # 以下是执行测试
-        response = requests.post(url, data=data, params=params, headers=header,verify=False)
+        response = requests.post(url, data=data, params=params, headers=header,verify=False,cookies=cookies,files=files)
     elif method in ("get", "GET"):
-        response = requests.get(url, data=data, params=params, headers=header,verify=False)
+        response = requests.get(url, data=data, params=params, headers=header,verify=False,cookies=cookies)
     elif method == "put":
-        response = requests.put(url, data=data, params=params, headers=header,verify=False)
+        response = requests.put(url, data=data, params=params, headers=header,verify=False,cookies=cookies)
     elif method == "delete":
-        response = requests.delete(url, data=data, params=params, headers=header,verify=False)
+        response = requests.delete(url, data=data, params=params, headers=header,verify=False,cookies=None)
     return response
 
 def responseHandle(response):   #对api接口执行返回的response进行处理

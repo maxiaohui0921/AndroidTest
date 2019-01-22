@@ -1,6 +1,6 @@
 #-*-coding:utf-8-*-
 #__author__='maxiaohui'
-from utils import apitest,files
+from utils import apitest,filesHandler
 import re
 import datetime,time,os
 from config import config
@@ -33,7 +33,7 @@ def downloadLatestDailyBuild():
         downloadBuild = re.findall(r'<a.*?href=.*?>(.*?ota.zip)<\/a>', html)[0]
         otaFile = config.log_path + "\\" + downloadBuild
         #在当前目录中查找文件downloadBuild，如果有改文件，无需下载，如果没有再去下载
-        if not files.search(config.log_path,downloadBuild):
+        if not filesHandler.search(config.log_path, downloadBuild):
             url=url+downloadBuild
             # #执行下载
             # print("开始下载文件，请等待。。。")

@@ -79,38 +79,8 @@ class easyExcel:  # 用于excel处理
     def save(self):
         self.xlBook.Save()
 
-    def getTestCase(self,xlSheet,row):  # 获得相关case的数据 -- fiddler中
-        testModule=xlSheet.Cells(row,2).Value
-        testName=xlSheet.Cells(row,3).Value
-        testMethod=xlSheet.Cells(row,4).Value
-        testUrl=xlSheet.Cells(row,5).Value
-        runOrNot=xlSheet.Cells(row,7).Value
-        testAccount=xlSheet.Cells(row,6).Value
-        data1=xlSheet.Cells(row,11).Value
-        expectedResult1=xlSheet.Cells(row,12).Value
-        dict={'module':testModule,'name':testName,'method':testMethod,'url':testUrl,'run':runOrNot,'account':testAccount,'test_data':data1,'expected':expectedResult1}
-        return dict
-
-    def getSwaggerTestCase(self,xlSheet,row): #获得相关case数据
-        testName = xlSheet.Cells(row, 2).Value
-        testMethod = xlSheet.Cells(row, 3).Value
-        testUrl = xlSheet.Cells(row, 4).Value
-        testHeaders = xlSheet.Cells(row, 5).Value
-        testData = xlSheet.Cells(row, 6).Value
-        testRole = xlSheet.Cells(row, 8).Value
-        dict = { 'name': testName, 'method': testMethod, 'url': testUrl,'header':testHeaders,'test_data':testData,'role':testRole}
-        return dict
-
-    def getSwaggerTestCaseUpdate(self,xlSheet,row): #获得相关case数据
-        testName = xlSheet.Cells(row, 4).Value
-        testMethod = xlSheet.Cells(row, 6).Value
-        testUrl = xlSheet.Cells(row, 5).Value
-        testHeaders = xlSheet.Cells(row, 7).Value
-        testData = xlSheet.Cells(row, 8).Value
-        testRole = xlSheet.Cells(row, 10).Value
-        dict = { 'name': testName, 'method': testMethod, 'url': testUrl,'header':testHeaders,'test_data':testData,'role':testRole}
-        return dict
-
+    def saveAs(self,file):
+        self.xlBook.SaveAs(file)
 
 if __name__ == "__main__":
     pass
