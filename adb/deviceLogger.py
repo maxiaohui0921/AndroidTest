@@ -81,7 +81,7 @@ def runMonkey(timeHour):
     os.chdir(config.log_path)
     os.mkdir(timeTagMonkey)
     monkeyLog=config.log_path+'\\'+timeTagMonkey
-    cmd='adb -s %s shell monkey -v -v -v -p com.opnext.face -p com.opnext.setting -p com.opnext.standby -p com.opnext.datatool --ignore-crashes --ignore-timeouts --monitor-native-crashes --throttle 300 -s %d %d 1>%s\info%s.txt 2>%s\error%s.txt'%(config.deviceId,seed,sendTimes,monkeyLog,timeTag,monkeyLog,timeTag)
+    cmd='adb -s %s shell monkey -v -v -v  --ignore-crashes --ignore-timeouts --monitor-native-crashes --throttle 300 -s %d %d 1>%s\info%s.txt 2>%s\error%s.txt'%(config.deviceId,seed,sendTimes,monkeyLog,timeTag,monkeyLog,timeTag)
     print(cmd)
     subprocess.Popen(cmd, shell=True)
     time.sleep(timeHour*3600)
