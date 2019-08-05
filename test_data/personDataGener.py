@@ -10,7 +10,7 @@ from utils.excel import easyExcel
 #更新文件夹里的图片名称，并相应的修改名称和文件名称
 
 #必须有一个模板
-excelFile=r'D:\00.BeeBoxes_working\requirements\100.xlsx'
+excelFile=r'D:\00_working\requirements\100.xlsx'
 
 #随机生成姓名
 def generName():
