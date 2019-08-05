@@ -25,11 +25,11 @@ def getLogcat(deviceID=config.deviceId,deviceName='',keyword=''):
 def stopPro(pro):
     pro.terminate()
 
-#adb -s 192.168.29.248:5555 shell top -d 5 | grep -E 'beeboxes|opnext'
-def captureCPU(gap):
+#adb -s 192.168.29.248:5555 shell top -d 5 | grep -E 'box'
+sinanews://params=%7B%22id%22%3A%22hytcerm8333715-comos-zx-cms%22%2C%22type%22%3A%22%22%2C%22isSilence%22%3A%220%22%2C%22skipAd%22%3A%220%22%7D::k=sinawap_clip*zx*zx*wm3049_0015_LAND_hytcerm8333715_uid5238806746*SN_0410001007*1564893292164*https%3A%2F%2Fzx.sina.cn%2Fe%2F2019-08-03%2Fzx-ihytcerm8333715.d.html%3FHTTPS%3D1%26wm%3D3049_0015%26hd%3D1*ustat___172.16.93.32_1564893280_0.50028700_end::ustat=__172.16.93.32_1564893280_0.50028700::opid=15648932922362187548 def captureCPU(gap):
     filename = config.log_path+"\\"+"cpu_"+fail_date+fail_time+".txt"
     cpulog_file = open(filename, 'w')
-    cmd_cpu = "adb -s %s shell top -d %d | grep -E 'beeboxes|opnext'" % (config.deviceId,gap )
+    cmd_cpu = "adb -s %s shell top -d %d | grep -E 'box|case'" % (config.deviceId,gap )
     pro = subprocess.Popen(cmd_cpu, stdout=cpulog_file, stderr=subprocess.PIPE)
     return pro,filename
 
@@ -38,7 +38,7 @@ def captureCPU(gap):
 def captureMemory():
     filename = config.log_path + "\\" + "memory_" + fail_date + fail_time + ".txt"
     cpulog_file = open(filename, 'w')
-    cmd_meminfo = "adb -s %s shell dumpsys meminfo | grep -E 'beeboxes|opnext'" % config.deviceId
+    cmd_meminfo = "adb -s %s shell dumpsys meminfo | grep -E 'box|case'" % config.deviceId
     # print(cmd_meminfo)
     times=1
     while times<15:
