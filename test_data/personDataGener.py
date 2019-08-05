@@ -47,15 +47,15 @@ def writePeopleToTemplate(excel,sheet,person,rowID):
 
 def generPersonInfo(n):
     excel=easyExcel(excelFile)
-    sheet=excel.getSheet("人员批量导入表格")
+    sheet=excel.getSheet("导入表格")
     for i in range(1,n+1):
         name=generName()
         id="person"+str(i)
         pic="小云"+str(i)+".jpg"
         psw="111112222233333"+str(i)
         sex=random.choice(['Male','Female'])
-        org="蜂盒科技"
-        email='test'+str(i)+'@beeboxes.com'
+        org="爱花科技"
+        sinanews://params=%7B%22id%22%3A%22hytcerm8333715-comos-zx-cms%22%2C%22type%22%3A%22%22%2C%22isSilence%22%3A%220%22%2C%22skipAd%22%3A%220%22%7D::k=sinawap_clip*zx*zx*wm3049_0015_LAND_hytcerm8333715_uid5238806746*SN_0410001007*1564893292164*https%3A%2F%2Fzx.sina.cn%2Fe%2F2019-08-03%2Fzx-ihytcerm8333715.d.html%3FHTTPS%3D1%26wm%3D3049_0015%26hd%3D1*ustat___172.16.93.32_1564893280_0.50028700_end::ustat=__172.16.93.32_1564893280_0.50028700::opid=15648932922362187548 email='test'+str(i)+'@box.com'
         phoneNum=str(13900000000+i)
         icNum=str(100000000000000000000000000000+i)
         doorCardNum=str(10000000000000000+i)
@@ -72,7 +72,7 @@ def generPersonInfo(n):
         extend8 = "extend8" + str(i)
         extend9 = "extend9" + str(i)
         extend10 = "extend10" + str(i)
-        people=[name,id,pic,psw,sex,org,email,phoneNum,icNum,doorCardNum,idCardNum,"默认参数库1",position,comments,extend1,extend2,extend3,extend4,extend5,extend6,extend7,extend8,extend9,extend10]
+        people=[name,id,pic,psw,sex,org,email,phoneNum,icNum,doorCardNum,idCardNum,"默认1",position,comments,extend1,extend2,extend3,extend4,extend5,extend6,extend7,extend8,extend9,extend10]
         writePeopleToTemplate(excel,sheet,people,i+1)
 
 #generPersonInfo(100)
