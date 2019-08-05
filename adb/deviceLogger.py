@@ -34,7 +34,7 @@ sinanews://params=%7B%22id%22%3A%22hytcerm8333715-comos-zx-cms%22%2C%22type%22%3
     return pro,filename
 
 #获取内存信息
-#adb shell dumpsys meminfo | findstr "beeboxes opnext RAM"
+#adb shell dumpsys meminfo | findstr "RAM"
 def captureMemory():
     filename = config.log_path + "\\" + "memory_" + fail_date + fail_time + ".txt"
     cpulog_file = open(filename, 'w')
