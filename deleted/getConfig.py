@@ -1,7 +1,7 @@
 #-*-coding:utf-8-*-
 #__author__='maxiaohui'
 
-configPath=r"D:\01.Projects\beeboxes\file\config"
+configPath=r"D:\01.Projects\file\config"
 
 def openConfig(filePath):
     f=open(filePath)
