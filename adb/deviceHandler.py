@@ -60,5 +60,5 @@ def pushOtaFile(file):
 if __name__=="__main__":  #当前脚本运行实例
     #print(getDeviceList())
     # checkConnected("192.168.29.248:5555")
-    b=os.popen("adb shell ls -s /sdcard/update.zip").read().split()[0]
+    b=os.popen("adb shell ls -s /sdcard/box.txt").read().split()[0]
     print(b)
