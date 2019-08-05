@@ -11,7 +11,7 @@ print(todayTag)
 
 def downloadLatestDailyBuild():
     method = "get"
-    url = "/agoldbase_rom_new/bb_dev_3g_dailybuild/"
+    url = "/rom_new/dailybuild/"
     swHost = "http://192.168.100.136:8000"
 
     html = apitest.testAPI(method, url, host=swHost).text
@@ -48,7 +48,7 @@ def downloadLatestDailyBuild():
 
 def pushDailyBuild(deviceId):
     file=downloadLatestDailyBuild()
-    # file="F:\\log\\BFRT_3G_DVT_2.2.x.d.t.d_01070417-ota.zip"
+    # file="F:\\log\\01070417.zip"
     if file:
         deviceHandler.checkConnected(deviceId)
         deviceHandler.pushOtaFile(file)
