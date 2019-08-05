@@ -48,7 +48,7 @@ def pushOtaFile(file):
     filesize0=0
     while not fileFinished:
         time.sleep(60)
-        fileSize1=int(os.popen("adb shell ls -s /sdcard/update.zip").read().split()[0])
+        fileSize1=int(os.popen("adb shell ls -s /sdcard/box.zip").read().split()[0])
         if fileSize1-filesize0>0:
             filesize0=fileSize1
             print("-",end="")
