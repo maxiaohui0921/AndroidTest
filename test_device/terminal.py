@@ -147,7 +147,7 @@ class frDevice(androidDevices):
         self.clickByResourceId("com.aihua.setting:id/library_btn_import")
         self.clickByClass_Index("android.widget.ImageView", 0)
         self.clickByClass_Index("android.widget.ImageView", 0)
-        newLicense=self.getTextByResourceId('com.opnext.setting:id/tv_maxmember')
+        newLicense=self.getTextByResourceId('com.aihua.setting:id/tv_maxmember')
         print("导入license之后，人数是：%s"%newLicense)
 
     # 获取人员容量
