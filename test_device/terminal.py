@@ -18,7 +18,7 @@ class frDevice(androidDevices):
     #滚轮调整时间的开始和结束时间
     def adjustTime(self,startT,endT):
         # h=self.deviceConnected(resourceId='com.aihus.setting:id/tv_start').sibling(className='android.widget.NumberPicker',index=1).child(resourceId='android:id/numberpicker_input').info['text']
-        # m=self.deviceConnected(resourceId='com.opnext.setting:id/tv_start').sibling(className='android.widget.NumberPicker',index=2).child(resourceId='android:id/numberpicker_input').info['text']
+        # m=self.deviceConnected(resourceId='com.aihua.setting:id/tv_start').sibling(className='android.widget.NumberPicker',index=2).child(resourceId='android:id/numberpicker_input').info['text']
         # h=self.deviceConnected(resourseId='com.aihua.setting:id/tv_end').sibling(className='android.widget.NumberPicker',index=1).child(resourceId='android:id/numberpicker_input').info['text']
         # m=self.deviceConnected(resourseId='com.aihua.setting:id/tv_end').sibling(className='android.widget.NumberPicker',index=2).child(resourceId='android:id/numberpicker_input').info['text']
         startH,startM=startT[:2],startT[3:]
