@@ -17,22 +17,22 @@ class frDevice(androidDevices):
 
     #滚轮调整时间的开始和结束时间
     def adjustTime(self,startT,endT):
-        # h=self.deviceConnected(resourceId='com.opnext.setting:id/tv_start').sibling(className='android.widget.NumberPicker',index=1).child(resourceId='android:id/numberpicker_input').info['text']
+        # h=self.deviceConnected(resourceId='com.aihus.setting:id/tv_start').sibling(className='android.widget.NumberPicker',index=1).child(resourceId='android:id/numberpicker_input').info['text']
         # m=self.deviceConnected(resourceId='com.opnext.setting:id/tv_start').sibling(className='android.widget.NumberPicker',index=2).child(resourceId='android:id/numberpicker_input').info['text']
-        # h=self.deviceConnected(resourseId='com.opnext.setting:id/tv_end').sibling(className='android.widget.NumberPicker',index=1).child(resourceId='android:id/numberpicker_input').info['text']
-        # m=self.deviceConnected(resourseId='com.opnext.setting:id/tv_end').sibling(className='android.widget.NumberPicker',index=2).child(resourceId='android:id/numberpicker_input').info['text']
+        # h=self.deviceConnected(resourseId='com.aihua.setting:id/tv_end').sibling(className='android.widget.NumberPicker',index=1).child(resourceId='android:id/numberpicker_input').info['text']
+        # m=self.deviceConnected(resourseId='com.aihua.setting:id/tv_end').sibling(className='android.widget.NumberPicker',index=2).child(resourceId='android:id/numberpicker_input').info['text']
         startH,startM=startT[:2],startT[3:]
         endH,endM=endT[:2],endT[3:]
         while self.deviceConnected(resourceId='com.aihua.setting:id/tv_start').sibling(className='android.widget.NumberPicker',index=1).child(resourceId='android:id/numberpicker_input').info['text']!=startH:
             time.sleep(1)
             self.deviceConnected.swipe(318, 680, 318, 620, steps=10)
-        while self.deviceConnected(resourceId='com.opnext.setting:id/tv_start').sibling(className='android.widget.NumberPicker',index=2).child(resourceId='android:id/numberpicker_input').info['text']!=startM:
+        while self.deviceConnected(resourceId='com.aihua.setting:id/tv_start').sibling(className='android.widget.NumberPicker',index=2).child(resourceId='android:id/numberpicker_input').info['text']!=startM:
             time.sleep(1)
             self.deviceConnected.swipe(427, 680, 427, 620, steps=10)
         while self.deviceConnected(resourceId='com.aihua.setting:id/tv_end').sibling(className='android.widget.NumberPicker',index=1).child(resourceId='android:id/numberpicker_input').info['text']!=endH:
             time.sleep(1)
             self.deviceConnected.swipe(610, 680, 610, 620, steps=10)
-        while self.deviceConnected(resourceId='com.opnext.setting:id/tv_end').sibling(className='android.widget.NumberPicker',index=2).child(resourceId='android:id/numberpicker_input').info['text']!=endM:
+        while self.deviceConnected(resourceId='com.aihus.setting:id/tv_end').sibling(className='android.widget.NumberPicker',index=2).child(resourceId='android:id/numberpicker_input').info['text']!=endM:
             time.sleep(1)
             self.deviceConnected.swipe(720, 680, 720, 620, steps=10)
 
@@ -70,7 +70,7 @@ class frDevice(androidDevices):
         self.scrollToend()
         self.clickByText("管理员")
         #点击右上角的添加按键
-        self.clickByResourceId("com.opnext.setting:id/actionbar_rightImg")
+        self.clickByResourceId("com.aihua.setting:id/actionbar_rightImg")
         #添加管理员姓名密码
         self.inputByResourceId("com.aihua.setting:id/et_name", name)
         self.inputByResourceId("com.aihua.setting:id/et_password", "2580")
@@ -125,7 +125,7 @@ class frDevice(androidDevices):
         self.clickByResourceId("com.aihua.setting:id/tv_about_device")
         sw=self.getTextByResourceId("com.aihua.setting:id/tv_software_version")
         sn=self.getTextByResourceId("com.aihua.setting:id/tv_device_sn")
-        licenseMaxNumber=self.getTextByResourceId("com.opnext.setting:id/tv_maxmember")
+        licenseMaxNumber=self.getTextByResourceId("com.sihua.setting:id/tv_maxmember")
         return sw,sn,licenseMaxNumber
 
     # 本地导入license
