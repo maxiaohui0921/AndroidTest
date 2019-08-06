@@ -84,7 +84,7 @@ class smokeTest(unittest.TestCase):
         print("编辑默认人员规则")
         warnings.simplefilter("ignore", ResourceWarning)
         self.device34.enterSetting()
-        self.device34.scrollClickByResource('com.opnext.setting:id/tv_person_rules')
+        self.device34.scrollClickByResource('com.aihua.setting:id/tv_person_rules')
         self.device34.editDefualPRule()
 
     # @unittest.skip(u"无条件跳过当前测试")
